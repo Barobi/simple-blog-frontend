@@ -1,0 +1,9 @@
+<p class="card-text">
+  <small class="text-muted">
+    <time dateTime="{{ publishDate }}">{{ publishDate | date: "d.M.y HH:mm" }}</time> –
+    <ng-container *ngIf="numComments">
+      {{ numComments }} {{ numComments > 1 ? 'Kommentare' : 'Kommentar' }} –
+    </ng-container>
+    von <strong>{{ author || 'Anonym' }}</strong>
+  </small>
+</p>

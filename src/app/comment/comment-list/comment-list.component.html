@@ -1,0 +1,36 @@
+<article *ngFor="let comment of comments">
+  <ul class="comments card shadow-sm bg-white rounded">
+    <li class="card-body">
+      <section class="post-comment">
+        <app-published-by
+          [author]="comment.user"
+          [publishDate]="comment.dateCreated"
+        ></app-published-by>
+        <p class="card-text" [innerHTML]="comment.content"></p>
+
+        <button
+          *ngIf="!comment.isReplying"
+          type="button"
+          class="btn btn-outline-primary btn-sm"
+          (click)="comment.isReplying = true"
+        >
+          Antworten
+        </button>
+      </section>
+
+      <app-comment-new
+        *ngIf="comment.isReplying"
+        [blogPostId]="comment.blogPostId"
+        [commentId]="comment.id"
+        [buttonName]="'Antworten'"
+        (cancelled)="comment.isReplying = false"
+        (commented)="commented.emit(comment.blogPostId)"
+      ></app-comment-new>
+
+      <app-comment-list
+        [comments]="comment?.children"
+        (commented)="commented.emit($event)"
+      ></app-comment-list>
+    </li>
+  </ul>
+</article>

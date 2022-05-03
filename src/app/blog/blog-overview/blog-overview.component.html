@@ -1,0 +1,24 @@
+<main class="container">
+  <section class="banner">
+    <h2 class="text-center">Mehr als blosse News</h2>
+    <h3 class="text-center">Die spannendsten Themen</h3>
+  </section>
+
+  <section class="articles">
+    <ng-container *ngIf="posts$ | async as posts; else noBlogPosts">
+      <article class="card" *ngFor="let post of posts | sortByProperty: 'dateModified':'DESC'">
+        <header class="card-header bg-transparent">
+          <h2 class="card-title">{{ post.title }}</h2>
+        </header>
+        <aside class="card-body">
+          <p class="card-text">{{ post.description }}</p>
+          <app-published-by [author]="post.author" [publishDate]="post.dateModified" [numComments]="post.numComments"></app-published-by>
+          <a [routerLink]="[post.id]" class="btn btn-primary">Mehr</a>
+        </aside>
+      </article>
+    </ng-container>
+    <ng-template #noBlogPosts>
+      <h3>Es sind noch keine Blog-Einträge vorhanden.</h3>
+    </ng-template>
+  </section>
+</main>
